@@ -15,9 +15,9 @@ const TrackList = (props) => {
                             cursor: 'pointer',
                             color: '#646CFF'
                         }}
-                        onClick={() => console.log('clicked!')}
+                        onClick={() => console.log('clicked', track.title)}
                     >
-                        {track.title}
+                        {track.title} by {track.artist}
                     </li>
                 ))}
             </ul>

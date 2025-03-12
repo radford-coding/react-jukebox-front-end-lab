@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import * as trackService from './services/trackService.js';
 import TrackList from './components/TrackList/TrackList.jsx';
+import TrackForm from './components/TrackForm/TrackForm.jsx';
 import './App.css';
 
 const App = () => {
 
   const [tracks, setTracks] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -22,10 +25,27 @@ const App = () => {
     fetchTracks();
   }, []);
 
+  const handleFormVisible = (track) => {
+    if (!track._id) setSelected(null);
+    setIsFormOpen(!isFormOpen);
+  };
 
   return (
     <>
-      <TrackList tracks={tracks}/>
+      <button
+        onClick={handleFormVisible}
+      >
+        add new track
+      </button>
+      <TrackList
+        tracks={tracks}
+        isFormOpen={isFormOpen}
+        handleFormVisible={handleFormVisible}
+      />
+      {isFormOpen
+        ? <TrackForm />
+        : <></>
+      }
     </>
   );
 };
