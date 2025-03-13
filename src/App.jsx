@@ -69,6 +69,21 @@ const App = () => {
     };
   };
 
+  const handleRemoveTrack = async (trackId) => {
+    try {
+      const removedTrack = await trackService.deleteTrack(trackId);
+      if (removedTrack.err) {
+        throw new Error(removedTrack.err);
+      };
+      const updatedTrackList = tracks.filter(track => track._id !== trackId);
+      setTracks(updatedTrackList);
+      setSelected(null);
+      // setIsFormOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <button
@@ -83,6 +98,7 @@ const App = () => {
         selected={selected}
         handleFormVisible={handleFormVisible}
         handleSelect={handleSelect}
+        handleRemoveTrack={handleRemoveTrack}
       />
       {isFormOpen
         ? <TrackForm

@@ -23,7 +23,9 @@ const TrackList = (props) => {
                                     onClick={() => props.handleFormVisible(track)}
                                     disabled={props.isFormOpen && props.selected === track}
                                 >edit</button>
-                                <button>remove</button>
+                                <button
+                                    onClick={() => props.handleRemoveTrack(track._id)}
+                                >remove</button>
                             </li>
                         ))}
                     </ul>
