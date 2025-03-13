@@ -10,10 +10,17 @@ const indexTracks = async () => {
 };
 
 const createTrack = async (formData) => {
+    // console.log(formData);
     try {
-        // const res = await fetch(BASE_URL);
-        // return res.json();
-        console.log(formData);
+        const res = await fetch(BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+        return res.json();
+        // console.log(formData);
     } catch (error) {
         console.log(error);
     };

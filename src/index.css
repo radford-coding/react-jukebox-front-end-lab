@@ -30,6 +30,13 @@ body {
   min-height: 100vh;
 }
 
+li {
+  list-style-type: none;
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  border-radius: 5px;
+  margin: 5px;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -46,7 +53,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+button:hover:not([disabled]) {
   border-color: #646cff;
 }
 button:focus,
