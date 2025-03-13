@@ -8,7 +8,7 @@ const initialFormData = {
 const TrackForm = (props) => {
 
     const [formData, setFormData] = useState(
-        props.selected ? props.selected : initialFormData
+        props.selected ? props.selected : initialFormData //! need to update this state when a different track is clicked
     );
 
     const handleChange = (e) => {
@@ -17,13 +17,23 @@ const TrackForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.handleAddTrack(formData);
+        if (props.selected) {
+            props.handleUpdateTrack(formData, props.selected._id);
+        } else {
+            props.handleAddTrack(formData);
+        };
         setFormData(initialFormData);
     };
 
     return (
         <div>
-            <h2>add a song:</h2>
+            <h2>
+                {
+                    props.selected
+                    ? 'edit'
+                    : 'new'
+                }
+            </h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title"> song title </label>
                 <input
