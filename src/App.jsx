@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import * as trackService from './services/trackService.js';
 import TrackList from './components/TrackList/TrackList.jsx';
 import TrackForm from './components/TrackForm/TrackForm.jsx';
+import NowPlaying from './components/NowPlaying/NowPlaying.jsx';
 import './App.css';
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [tracks, setTracks] = useState([]);
   const [selected, setSelected] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [playing, setPlaying] = useState(null);
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -77,6 +79,7 @@ const App = () => {
       };
       const updatedTrackList = tracks.filter(track => track._id !== trackId);
       setTracks(updatedTrackList);
+      if (playing._id === selected._id) setPlaying(null);
       setSelected(null);
       // setIsFormOpen(false);
     } catch (error) {
@@ -84,14 +87,21 @@ const App = () => {
     }
   };
 
+  const handlePlay = (track) => {
+    setSelected(track);
+    setPlaying(track);
+  };
+
   return (
     <>
+      
       <button
         disabled={selected === null && isFormOpen}
         onClick={handleFormVisible}
       >
         add new track
       </button>
+      
       <TrackList
         tracks={tracks}
         isFormOpen={isFormOpen}
@@ -99,15 +109,18 @@ const App = () => {
         handleFormVisible={handleFormVisible}
         handleSelect={handleSelect}
         handleRemoveTrack={handleRemoveTrack}
+        handlePlay={handlePlay}
       />
       {isFormOpen
         ? <TrackForm
           handleAddTrack={handleAddTrack}
           selected={selected}
           handleUpdateTrack={handleUpdateTrack}
+          setIsFormOpen={setIsFormOpen}
         />
         : <></>
       }
+      <NowPlaying playing={playing}/>
     </>
   );
 };

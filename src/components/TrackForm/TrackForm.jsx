@@ -8,7 +8,7 @@ const initialFormData = {
 const TrackForm = (props) => {
 
     const [formData, setFormData] = useState(
-        props.selected ? props.selected : initialFormData //! need to update this state when a different track is clicked
+        props.selected ? props.selected : initialFormData
     );
 
     const handleChange = (e) => {
@@ -23,10 +23,14 @@ const TrackForm = (props) => {
             props.handleAddTrack(formData);
         };
         setFormData(initialFormData);
+        props.setIsFormOpen(false);
     };
 
     return (
-        <div>
+        <div style={{
+            border: '1px solid rgba(255,255,255,.87)',
+            marginBottom: '5px',
+        }}>
             <h2>
                 {
                     props.selected
